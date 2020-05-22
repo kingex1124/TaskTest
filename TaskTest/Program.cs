@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,7 +12,6 @@ namespace TaskTest
     {
         static void Main(string[] args)
         {
-           
             Console.ReadLine();
         }
 
@@ -377,14 +377,18 @@ namespace TaskTest
                 {
                     taskArr[i] = taskFactory.StartNew(() =>
                     {
-                        Console.WriteLine("任務1-Start【ThreadId=" + Thread.CurrentThread.ManagedThreadId + "】：" + DateTime.Now);
-                        Console.WriteLine("任務1-End【ThreadId=" + Thread.CurrentThread.ManagedThreadId + "】：" + DateTime.Now);
+                        Console.WriteLine("任務-Start【ThreadId=" + Thread.CurrentThread.ManagedThreadId + "】：" + DateTime.Now);
+                        Thread.Sleep(3000);
+                        Console.WriteLine("任務-End【ThreadId=" + Thread.CurrentThread.ManagedThreadId + "】：" + DateTime.Now);
+
                     });
                 }
+
 
                 Task.WaitAll(taskArr);
 
                 Console.WriteLine("WaitAll執行之後【ThreadId=" + Thread.CurrentThread.ManagedThreadId + "】：" + DateTime.Now);
+
                 Console.WriteLine("Main-End【ThreadId=" + Thread.CurrentThread.ManagedThreadId + "】：" + DateTime.Now);
             }
         }
