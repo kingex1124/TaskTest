@@ -5,3 +5,4 @@
 /.vs/TaskTest/v16
 /TaskTest/bin/Debug
 /TaskTest/obj/Debug
+/packages/Newtonsoft.Json.12.0.3

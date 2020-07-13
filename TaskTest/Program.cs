@@ -12,6 +12,10 @@ namespace TaskTest
     {
         static void Main(string[] args)
         {
+            DataDoing dd = new DataDoing();
+            //dd.DataCheckNoSeparter();
+            dd.DataCheck();
+          
             Console.ReadLine();
         }
 
@@ -366,7 +370,9 @@ namespace TaskTest
                 Console.WriteLine("Main-End【ThreadId=" + Thread.CurrentThread.ManagedThreadId + "】：" + DateTime.Now);
             }
 
-
+            /// <summary>
+            /// 10000個執行續同時跑
+            /// </summary>
             public void Run10000timesTest()
             {
                 Console.WriteLine("Main-Start【ThreadId=" + Thread.CurrentThread.ManagedThreadId + "】：" + DateTime.Now);
@@ -389,6 +395,54 @@ namespace TaskTest
 
                 Console.WriteLine("WaitAll執行之後【ThreadId=" + Thread.CurrentThread.ManagedThreadId + "】：" + DateTime.Now);
 
+                Console.WriteLine("Main-End【ThreadId=" + Thread.CurrentThread.ManagedThreadId + "】：" + DateTime.Now);
+            }
+
+            /// <summary>
+            /// 測試參數
+            /// </summary>
+            public void WaitAllParamaterTest()
+            {
+                int count = 0;
+
+                Console.WriteLine("Main-Start【ThreadId=" + Thread.CurrentThread.ManagedThreadId + "】：" + DateTime.Now);
+                TaskFactory taskFactory = new TaskFactory();
+                Task task1 = taskFactory.StartNew(() =>
+                {
+                    Console.WriteLine("任務1-Start【ThreadId=" + Thread.CurrentThread.ManagedThreadId + "】：" + DateTime.Now);
+                    Thread.Sleep(3000);
+                    int x = 0;
+                    for (int i = 0; i < 20; i++)
+                        x++;
+
+                    count += x;
+                    Console.WriteLine("任務1-End【ThreadId=" + Thread.CurrentThread.ManagedThreadId + "】：" + DateTime.Now);
+                });
+                Task task2 = taskFactory.StartNew(() =>
+                {
+                    Console.WriteLine("任務2-Start【ThreadId=" + Thread.CurrentThread.ManagedThreadId + "】：" + DateTime.Now);
+                    Thread.Sleep(4000);
+                    int x = 0;
+                    for (int i = 0; i < 30; i++)
+                        x++;
+
+                    count += x;
+                    Console.WriteLine("任務2-End【ThreadId=" + Thread.CurrentThread.ManagedThreadId + "】：" + DateTime.Now);
+                });
+                Task task3 = taskFactory.StartNew(() =>
+                {
+                    Console.WriteLine("任務3-Start【ThreadId=" + Thread.CurrentThread.ManagedThreadId + "】：" + DateTime.Now);
+                    Thread.Sleep(5000);
+                    int x = 0;
+                    for (int i = 0; i < 40; i++)
+                        x++;
+
+                    count += x;
+                    Console.WriteLine("任務3-End【ThreadId=" + Thread.CurrentThread.ManagedThreadId + "】：" + DateTime.Now);
+                });
+                Task.WaitAll(new Task[] { task1, task2, task3 });
+                Console.WriteLine(count);
+                Console.WriteLine("WaitAll執行之後【ThreadId=" + Thread.CurrentThread.ManagedThreadId + "】：" + DateTime.Now);
                 Console.WriteLine("Main-End【ThreadId=" + Thread.CurrentThread.ManagedThreadId + "】：" + DateTime.Now);
             }
         }
